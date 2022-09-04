@@ -2,6 +2,12 @@
 #include <cstdlib>
 
 
+struct rectangle {
+    double length;
+    double width;
+};
+
+
 int double_comparator(void* first, void* second) {
     double* a = (double*)first;
     double* b = (double*)second;
@@ -9,6 +15,21 @@ int double_comparator(void* first, void* second) {
         return -1;
     }
     if (*a == *b) {
+        return 0;
+    }
+    return 1;
+}
+
+
+int rectangle_comparator(void* first, void* second) {
+    rectangle* a = (rectangle*)first;
+    rectangle* b = (rectangle*)second;
+    double a_square = a->length * a->width;
+    double b_square = b->length * b->width;
+    if (a_square < b_square) {
+        return -1;
+    }
+    if (a_square == b_square) {
         return 0;
     }
     return 1;
@@ -65,18 +86,21 @@ void sort(void* start, unsigned int e_size, unsigned int l_size, int comparator(
 }
 
 
-void check() {
+void double_check() {
     using namespace std;
     unsigned int n;
     cin >> n;
-    double *a = new double[n];
+    double *a = new (nothrow) double[n];
+    if (a == nullptr) {
+        cout << "Error in memory alocation";
+        delete a;
+        return;
+    }
     for (unsigned int i = 0; i < n; i++) {
         cin >> a[i];
     }
         
     sort(a, sizeof(double), n, double_comparator);
-
-    /*hoarasort(a, 0, n - 1);*/
     
     for (unsigned int i = 0; i < n; i++) {
         cout << a[i] << " ";
@@ -85,8 +109,40 @@ void check() {
 }
 
 
+void rectangle_check() {
+    using namespace std;
+    unsigned int n;
+    cin >> n;
+    rectangle **a = new (nothrow) rectangle*[n];
+    if (a == nullptr) {
+        cout << "Error in memory alocation";
+        delete a;
+        return;
+    }
+
+    for (unsigned int i = 0; i < n; i++) {
+        rectangle* rect = new (nothrow) rectangle;
+        if (rect == nullptr) {
+            cout << "Error in memory alocation";
+            delete rect;
+            return;
+        }
+        cin >> rect->length >> rect->width;
+        a[i] = rect;
+    }
+
+    sort(a, sizeof(rectangle), n, rectangle_comparator);
+
+    for (unsigned int i = 0; i < n; i++) {
+        rectangle *rect = a[i];
+        cout << rect->length;
+    }
+    return;
+}
+
+
 int main()
 {   
-    check();
+    rectangle_check();
     return 0;
 }
