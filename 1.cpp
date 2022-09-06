@@ -58,14 +58,19 @@ void sort(void* start, unsigned int e_size, unsigned int l_size, int comparator(
     char* s = (char*)start;
 
     do {
-        while (comparator((void*)(s + i * e_size), (void*)(s + x * e_size)) == -1)
+        while (comparator((void*)(s + i * e_size), (void*)(s + x * e_size)) == -1) {
             i++;
-        while (comparator((void*)(s + j * e_size), (void*)(s + x * e_size)) == 1)
+            std::cout << i << " " << x << " " << (void*)(s + i * e_size) << " " <<  (void*)(s + x * e_size) << std::endl;
+        }
+        while (comparator((void*)(s + j * e_size), (void*)(s + x * e_size)) == 1) {
             j--;
+            std::cout << j << " " << x << " " << (void*)(s + j * e_size) << " " << (void*)(s + x * e_size) << std::endl;
+        }
 
         if (i <= j)
         {   
-            if (i < j)
+            std::cout << i << " " << j << " " << (void*)(s + i * e_size) << " " << (void*)(s + j * e_size) << std::endl;
+            if (comparator((void*)(s + i * e_size), (void*)(s + j * e_size)) == 1)
             {
                 swap((void*)(s + i * e_size), (void*)(s + j * e_size), e_size);
             }
@@ -105,6 +110,8 @@ void double_check() {
     for (unsigned int i = 0; i < n; i++) {
         cout << a[i] << " ";
     }
+
+    delete a;
     return;
 }
 
@@ -113,7 +120,7 @@ void rectangle_check() {
     using namespace std;
     unsigned int n;
     cin >> n;
-    rectangle **a = new (nothrow) rectangle*[n];
+    rectangle *a = new (nothrow) rectangle[n];
     if (a == nullptr) {
         cout << "Error in memory alocation";
         delete a;
@@ -121,28 +128,22 @@ void rectangle_check() {
     }
 
     for (unsigned int i = 0; i < n; i++) {
-        rectangle* rect = new (nothrow) rectangle;
-        if (rect == nullptr) {
-            cout << "Error in memory alocation";
-            delete rect;
-            return;
-        }
-        cin >> rect->length >> rect->width;
-        a[i] = rect;
+        cin >> a[i].length >> a[i].width;
     }
 
     sort(a, sizeof(rectangle), n, rectangle_comparator);
 
     for (unsigned int i = 0; i < n; i++) {
-        rectangle *rect = a[i];
-        cout << rect->length;
+        cout << a[i].length << a[i].width;
     }
+
+    delete a;
     return;
 }
 
 
 int main()
 {   
-    rectangle_check();
+    double_check();
     return 0;
 }
