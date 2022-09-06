@@ -39,6 +39,11 @@ int rectangle_comparator(void* first, void* second) {
 void swap(void* first, void* second, unsigned int e_size) {
     using namespace std;
     void* tmp = malloc(e_size);
+    if (tmp == 0) {
+        cout << "Error in memory alocation";
+        free(tmp);
+        return;
+    }
     memcpy(tmp, first, e_size);
     memcpy(first, second, e_size);
     memcpy(second, tmp, e_size);
@@ -93,6 +98,7 @@ void sort(void* start, unsigned int e_size, unsigned int l_size, int comparator(
 void double_check() {
     using namespace std;
     unsigned int n;
+    cout << "Please, enter the list length" << endl;
     cin >> n;
     double *a = new (nothrow) double[n];
     if (a == nullptr) {
@@ -100,6 +106,7 @@ void double_check() {
         delete[] a;
         return;
     }
+    cout << "Please, enter the list" << endl;
     for (unsigned int i = 0; i < n; i++) {
         cin >> a[i];
     }
@@ -118,6 +125,7 @@ void double_check() {
 void rectangle_check() {
     using namespace std;
     unsigned int n;
+    cout << "Please, enter the list length" << endl;
     cin >> n;
     rectangle *a = new (nothrow) rectangle[n];
     if (a == nullptr) {
@@ -125,6 +133,7 @@ void rectangle_check() {
         delete[] a;
         return;
     }
+    cout << "Please, enter the list" << endl;
 
     for (unsigned int i = 0; i < n; i++) {
         cin >> a[i].length >> a[i].width;
@@ -140,11 +149,13 @@ void rectangle_check() {
     return;
 }
 
+
 void check() {
     using namespace std;
     unsigned int n;
     cout << "If you want to sort type double, please, enter 0" << endl;
     cout << "If you want to sort rectangle squares, please, enter 1" << endl;
+    cout << endl;
     cin >> n;
     if (n == 0) {
         double_check();
@@ -161,3 +172,4 @@ int main()
     check();
     return 0;
 }
+
