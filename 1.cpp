@@ -60,22 +60,21 @@ void sort(void* start, unsigned int e_size, unsigned int l_size, int comparator(
     do {
         while (comparator((void*)(s + i * e_size), (void*)(s + x * e_size)) == -1) {
             i++;
-            std::cout << i << " " << x << " " << (void*)(s + i * e_size) << " " <<  (void*)(s + x * e_size) << std::endl;
         }
         while (comparator((void*)(s + j * e_size), (void*)(s + x * e_size)) == 1) {
             j--;
-            std::cout << j << " " << x << " " << (void*)(s + j * e_size) << " " << (void*)(s + x * e_size) << std::endl;
         }
 
         if (i <= j)
         {   
-            std::cout << i << " " << j << " " << (void*)(s + i * e_size) << " " << (void*)(s + j * e_size) << std::endl;
             if (comparator((void*)(s + i * e_size), (void*)(s + j * e_size)) == 1)
             {
                 swap((void*)(s + i * e_size), (void*)(s + j * e_size), e_size);
             }
             i++;
-            j--;
+            if (j > 0) {
+                j--;
+            }
         }
     } while (i <= j);
 
@@ -98,7 +97,7 @@ void double_check() {
     double *a = new (nothrow) double[n];
     if (a == nullptr) {
         cout << "Error in memory alocation";
-        delete a;
+        delete[] a;
         return;
     }
     for (unsigned int i = 0; i < n; i++) {
@@ -111,7 +110,7 @@ void double_check() {
         cout << a[i] << " ";
     }
 
-    delete a;
+    delete[] a;
     return;
 }
 
@@ -123,7 +122,7 @@ void rectangle_check() {
     rectangle *a = new (nothrow) rectangle[n];
     if (a == nullptr) {
         cout << "Error in memory alocation";
-        delete a;
+        delete[] a;
         return;
     }
 
@@ -134,16 +133,31 @@ void rectangle_check() {
     sort(a, sizeof(rectangle), n, rectangle_comparator);
 
     for (unsigned int i = 0; i < n; i++) {
-        cout << a[i].length << a[i].width;
+        cout << a[i].length << " " << a[i].width << endl;
     }
 
-    delete a;
+    delete[] a;
+    return;
+}
+
+void check() {
+    using namespace std;
+    unsigned int n;
+    cout << "If you want to sort type double, please, enter 0" << endl;
+    cout << "If you want to sort rectangle squares, please, enter 1" << endl;
+    cin >> n;
+    if (n == 0) {
+        double_check();
+    }
+    else if (n == 1) {
+        rectangle_check();
+    }
     return;
 }
 
 
 int main()
 {   
-    double_check();
+    check();
     return 0;
 }
