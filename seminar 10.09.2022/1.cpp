@@ -1,10 +1,6 @@
 #include <iostream>
 
 
-double min(double, double);
-double max(double, double);
-
-
 class Rect {
 private:
     double x1, y1, x2, y2;
@@ -43,6 +39,9 @@ public:
     };
 
     Rect intersection(Rect rect) {
+        double min(double, double);
+        double max(double, double);
+
         double new_x1, new_y1, new_x2, new_y2;
 
         new_x1 = max(min(x1, x2), min(rect.x1, rect.x2));
@@ -60,6 +59,9 @@ public:
     };
 
     Rect unification(Rect rect) {
+        double min(double, double);
+        double max(double, double);
+
         double new_x1, new_y1, new_x2, new_y2;
 
         if (empty) {
@@ -156,3 +158,4 @@ int main()
     check();
     return 0;
 };
+
