@@ -1,20 +1,8 @@
 #include <iostream>
 
 
-double min(double a, double b) {
-    if (a <= b) {
-        return a;
-    };
-    return b;
-};
-
-
-double max(double a, double b) {
-    if (a >= b) {
-        return a;
-    };
-    return b;
-};
+double min(double, double);
+double max(double, double);
 
 
 class Rect {
@@ -89,6 +77,22 @@ public:
         Rect output(new_x1, new_y1, new_x2, new_y2);
         return output;
     };
+};
+
+
+double min(double a, double b) {
+    if (a <= b) {
+        return a;
+    };
+    return b;
+};
+
+
+double max(double a, double b) {
+    if (a >= b) {
+        return a;
+    };
+    return b;
 };
 
 
