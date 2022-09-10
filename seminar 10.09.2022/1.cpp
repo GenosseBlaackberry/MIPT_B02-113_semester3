@@ -95,17 +95,48 @@ public:
 void check() {
     using namespace std;
     double x1, y1, x2, y2;
-    bool t;
+    unsigned t = 1;
+    unsigned n;
 
+    cout << "Enter two rectangles" << endl;
     cin >> x1 >> y1 >> x2 >> y2;
     Rect a(x1, y1, x2, y2);
     cin >> x1 >> y1 >> x2 >> y2;
     Rect b(x1, y1, x2, y2);
 
+    while (t != 0) {
+        cout << " 0 - see intersection and unification\n 1 - move rectangle\n 2 - set new size" << endl;
+        cin >> t;
+        if (t == 1) {
+            cout << "Choose rectangle" << endl;
+            cin >> n;
+            cout << "enter dx and dy" << endl;
+            double dx, dy;
+            cin >> dx >> dy;
+            if (n == 1) {
+                a.translation(dx, dy);
+            }
+            else if (n == 2) {
+                b.translation(dx, dy);
+            }
+        }
+        else if (t == 2) {
+            cout << "Choose rectangle" << endl;
+            cin >> n;
+            cout << "enter dx and dy" << endl;
+            double dx, dy;
+            cin >> dx >> dy;
+            if (n == 1) {
+                a.scaling(dx, dy);
+            }
+            else if (n == 2) {
+                b.scaling(dx, dy);
+            }
+        };
+    };
+
     Rect c = a.intersection(b);
     Rect d = a.unification(b);
-
-    a.translation(0, 0);
 
     cout << "Intersection: ";
     c.output();
@@ -121,3 +152,4 @@ int main()
     check();
     return 0;
 };
+
