@@ -27,7 +27,7 @@ public:
     Rect(double x1, double y1, double x2, double y2) : x1(x1), y1(y1), x2(x2), y2(y2), empty(0) {};
     Rect() : x1(0), y1(0), x2(0), y2(0), empty(1) {};
 
-    void output() {
+    void output() const{
         using namespace std;
         if (empty){
             cout << "empty rectangle" << endl;
@@ -152,4 +152,3 @@ int main()
     check();
     return 0;
 };
-
