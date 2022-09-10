@@ -4,7 +4,7 @@
 double min(double a, double b) {
     if (a <= b) {
         return a;
-    }
+    };
     return b;
 };
 
@@ -12,7 +12,7 @@ double min(double a, double b) {
 double max(double a, double b) {
     if (a >= b) {
         return a;
-    }
+    };
     return b;
 };
 
@@ -20,14 +20,19 @@ double max(double a, double b) {
 class Rect {
 private:
     double x1, y1, x2, y2;
+    const bool empty;
 
 
 public:
-    Rect(double x1, double y1, double x2, double y2) : x1(x1), y1(y1), x2(x2), y2(y2) {};
-    Rect() : x1(0), y1(0), x2(0), y2(0) {};
+    Rect(double x1, double y1, double x2, double y2) : x1(x1), y1(y1), x2(x2), y2(y2), empty(0) {};
+    Rect() : x1(0), y1(0), x2(0), y2(0), empty(1) {};
 
     void output() {
         using namespace std;
+        if (empty){
+            cout << "empty rectangle" << endl;
+            return;
+        }
         cout << "(" << x1 << ", " << y1 << ") ";
         cout << "(" << x2 << ", " << y1 << ") ";
         cout << "(" << x2 << ", " << y2 << ") ";
@@ -57,7 +62,7 @@ public:
         new_x2 = min(max(x1, x2), max(rect.x1, rect.x2));
         new_y2 = min(max(y1, y2), max(rect.y1, rect.y2));
 
-        if (new_x1 > new_x2 || new_y1 > new_y2) {
+        if (new_x1 > new_x2 || new_y1 > new_y2 || empty || rect.empty) {
             Rect output;
             return output;
         }
@@ -68,6 +73,13 @@ public:
 
     Rect unification(Rect rect) {
         double new_x1, new_y1, new_x2, new_y2;
+
+        if (empty) {
+            return rect;
+        };
+        if (rect.empty) {
+            return *this;
+        };
 
         new_x1 = min(min(x1, x2), min(rect.x1, rect.x2));
         new_y1 = min(min(y1, y2), min(rect.y1, rect.y2));
