@@ -83,6 +83,7 @@ public:
 void check() {
     using namespace std;
     double x1, y1, x2, y2;
+    bool t;
 
     cin >> x1 >> y1 >> x2 >> y2;
     Rect a(x1, y1, x2, y2);
@@ -91,6 +92,8 @@ void check() {
 
     Rect c = a.intersection(b);
     Rect d = a.unification(b);
+
+    a.translation(0, 0);
 
     cout << "Intersection: ";
     c.output();
