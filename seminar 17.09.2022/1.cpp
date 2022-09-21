@@ -105,13 +105,13 @@ public:
     ContinuousStateWithGapsAndAdds(std::vector<SegmentState> const& src, SetState gaps, SetState adds) : segments(src), gaps(gaps), adds(adds) {};
 
     bool contains(int s) const override {
-
+        bool flag = 0;
         for (auto i : segments) {
             if (i.contains(s)) {
-                return 1;
+                flag = 1;
             }
         }
-        return adds.contains(s) && not (gaps.contains(s));
+        return (flag && adds.contains(s)) || (flag && not (gaps.contains(s))) || (adds.contains(s) && not (gaps.contains(s)));
     }
 };
 
@@ -162,8 +162,8 @@ public:
     }
 };
 
-
-int main(int argc, const char* argv[]) {
+void check() {
+    using namespace std;
     DiscreteState d(1);
     SegmentState s1(0, 10);
     SegmentState s2(42, 47);
@@ -178,5 +178,9 @@ int main(int argc, const char* argv[]) {
     std::cout << pt(cswg) << std::endl;
     std::cout << pt(cswa) << std::endl;
     std::cout << pt(cswga) << std::endl;
+}
+
+int main(int argc, const char* argv[]) {
+    check();
     return 0;
 }
