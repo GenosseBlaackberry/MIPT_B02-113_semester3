@@ -177,15 +177,14 @@ public:
 
 
 void check(){
+    using namespace std;
     DiscreteState ds(101);
     SegmentState ss1(0, 100);
     SegmentState ss2(50, 150);
+    SetState ss3({ 1, 25, 56, 789, 168});
     UnitedStates us(ds, ss1);
     IntersectedStates is(ss1, ss2);
     NegationState ng(ds);
-    ProbabilityTest pt(-1000, 1000);
-    std::cout << pt.test(ds, 30000, 0.7) << std::endl;
-    std::cout << pt.test(ss1, 30000, 0.7) << std::endl;
 }
 
 
