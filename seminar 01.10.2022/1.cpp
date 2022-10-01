@@ -1,4 +1,5 @@
 /* Обобщённая сортировка */
+
 #include <iostream>
 #include <cstdlib>
 
@@ -27,6 +28,7 @@ struct Comparator<double> {
         return 1;
     }
 };
+
 
 template<>
 struct Comparator<Rectangle> {
@@ -58,6 +60,7 @@ void swap(void* first, void* second, unsigned int e_size) {
     free(tmp);
     return;
 }
+
 
 template <typename T>
 void sort(T* start, unsigned int l_size) {
