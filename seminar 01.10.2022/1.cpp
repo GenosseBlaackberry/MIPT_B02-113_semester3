@@ -60,12 +60,12 @@ void swap(void* first, void* second, unsigned int e_size) {
 }
 
 template <typename T>
-void sort(T* start, unsigned int e_size, unsigned int l_size) {
+void sort(T* start, unsigned int l_size) {
     if (l_size <= 1) {
         return;
     }
 
-    unsigned int i = 0, j = (l_size - 1);
+    unsigned int e_size = sizeof(T), i = 0, j = (l_size - 1);
     unsigned int x = (l_size - 1) / 2;
     char* s = (char*)start;
 
@@ -94,10 +94,10 @@ void sort(T* start, unsigned int e_size, unsigned int l_size) {
 
 
     if (i < (l_size - 1)) {
-        sort((T*)(s + i * e_size), e_size, l_size - i);
+        sort((T*)(s + i * e_size), l_size - i);
     }
     if (j > 0) {
-        sort(start, e_size, j + 1);
+        sort(start, j + 1);
     }
     return;
 }
@@ -120,7 +120,7 @@ void double_check() {
         cin >> a[i];
     }
 
-    sort(a, sizeof(double), n);
+    sort(a, n);
 
     for (unsigned int i = 0; i < n; i++) {
         cout << a[i] << " ";
@@ -148,7 +148,7 @@ void rectangle_check() {
         cin >> a[i].length >> a[i].width;
     }
 
-    sort(a, sizeof(Rectangle), n);
+    sort(a, n);
 
     for (unsigned int i = 0; i < n; i++) {
         cout << a[i].length << " " << a[i].width << endl;
