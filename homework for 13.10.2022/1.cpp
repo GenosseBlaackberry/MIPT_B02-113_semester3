@@ -1,7 +1,6 @@
 /* Обобщённая сортировка */
 
 #include <iostream>
-#include <cstdlib>
 
 
 struct Rectangle {
