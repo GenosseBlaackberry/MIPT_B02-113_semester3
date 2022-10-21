@@ -24,7 +24,7 @@ public:
 
 	//метод создание тела сетки
 	void make_data() {
-		data = new (std::nothrow) T[(y_size + 1) * (x_size + 1)];
+		data = new (std::nothrow) T[(y_size) * (x_size)];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
 			delete[] data;
@@ -40,7 +40,7 @@ public:
 
 	Grid(size_type y_size, size_type x_size): y_size(y_size), x_size(x_size){
 		make_data();
-		for (unsigned i = 0; i < (y_size + 1) * (x_size + 1); i++) {
+		for (unsigned i = 0; i < (y_size) * (x_size); i++) {
 			data[i] = default_entity;
 		}
 	}
