@@ -24,7 +24,7 @@ public:
 
 	//метод создание тела сетки
 	void make_data() {
-		data = new (std::nothrow) T[(y_size) * (x_size)];
+		data = new (std::nothrow) T[(y_size + 1) * (x_size + 1)];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
 			delete[] data;
@@ -38,14 +38,14 @@ public:
 		data[0] = t;
 	}
 
-	Grid(size_type y_size, size_type x_size): y_size(y_size), x_size(x_size){
+	Grid(size_type y_size, size_type x_size) : y_size(y_size), x_size(x_size) {
 		make_data();
 		for (unsigned i = 0; i < (y_size) * (x_size); i++) {
 			data[i] = default_entity;
 		}
 	}
 
-	Grid(size_type y_size, size_type x_size, T const& t): y_size(y_size), x_size(x_size) {
+	Grid(size_type y_size, size_type x_size, T const& t) : y_size(y_size), x_size(x_size) {
 		make_data();
 		for (unsigned i = 0; i < (y_size + 1) * (x_size + 1); i++) {
 			data[i] = t;
@@ -91,7 +91,7 @@ public:
 	}
 
 	//перемещающее присваивание
-	Grid<T>& operator=(Grid<T>&& other) noexcept{
+	Grid<T>& operator=(Grid<T>&& other) noexcept {
 		Grid<T> tmp(other);
 		std::swap(this->x_size, tmp.x_size);
 		std::swap(this->y_size, tmp.y_size);
@@ -174,11 +174,11 @@ void check() {
 }
 
 int main() {
-	/*Grid<unsigned> a(7, 7, 8);
+	Grid<unsigned> a(7, 7, 8);
 	Grid<unsigned> b = a;
 	Grid<unsigned> c(1);
 	c = 7;
-	c.print();*/
+	c.print();
 	check();
 	return 0;
 }
