@@ -23,10 +23,14 @@ public:
 	using output_type = size_type;
 
 	//метод создание тела сетки
-	void make_data() {
+	void make_data(unsigned tries = 0) {
+		if (tries == 100) {
+			throw;
+		}
 		data = new (std::nothrow) T[(y_size + 1) * (x_size + 1)];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
+			make_data(tries + 1);
 		}
 		return;
 	}
