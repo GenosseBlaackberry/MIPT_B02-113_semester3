@@ -73,7 +73,7 @@ public:
 	}
 
 	//конструктор перемещения
-	Grid(Grid<T>&& other) {
+	Grid(Grid<T>&& other) noexcept {
 		x_size = other.x_size;
 		y_size = other.y_size;
 		data = other.data;
@@ -178,10 +178,11 @@ void check() {
 
 int main() {
 	Grid<unsigned> a(7, 7, 8);
-	Grid<unsigned> b = a;
+	Grid<unsigned> b = std::move(a);
 	Grid<unsigned> c(1);
 	c = 7;
 	c.print();
+	b.print();
 	check();
 	return 0;
 }
