@@ -17,7 +17,7 @@ private:
 	T default_entity = default_value<T>();
 	size_type y_size, x_size;
 	T* data;
-	bool indexing;
+	bool indexing = false;
 
 public:
 	using output_type = size_type;
@@ -27,7 +27,6 @@ public:
 		data = new (std::nothrow) T[(y_size + 1) * (x_size + 1)];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
-			delete[] data;
 		}
 		return;
 	}
@@ -119,7 +118,7 @@ public:
 
 	//оператор индексирования
 	T* operator[](size_type idx) {
-		if (indexing = false) {
+		if (indexing == false) {
 			return data + idx * x_size;
 		}
 		indexing = false;
