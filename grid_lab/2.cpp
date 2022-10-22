@@ -126,16 +126,20 @@ private:
 	T default_entity = default_value<T>();
 	size_type size;
 	T* data;
+	const unsigned MAX_TRIES = 10;
 
 public:
 	using output_type = size_type;
 
 	//метод создание тела сетки
-	void make_data() {
+	void make_data(unsigned tries = 0) {
+		if (tries == MAX_TRIES) {
+			throw;
+		}
 		data = new (std::nothrow) T[size];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
-			delete[] data;
+			make_data(tries + 1);
 		}
 		return;
 	}
@@ -162,9 +166,9 @@ public:
 
 	//деструктор
 	~Grid() {
-		/*if (this != nullptr && data != nullptr) {
+		if (this != nullptr && data!= nullptr) {
 			delete[] data;
-		}*/
+		}
 	}
 
 	//конструктор копирования
