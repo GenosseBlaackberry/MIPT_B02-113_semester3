@@ -50,7 +50,7 @@ public:
 
 	Grid(size_type y_size, size_type x_size, T const& t) : y_size(y_size), x_size(x_size) {
 		make_data();
-		for (unsigned i = 0; i < (y_size + 1) * (x_size + 1); i++) {
+		for (unsigned i = 0; i < y_size * x_size; i++) {
 			data[i] = t;
 		}
 	}
