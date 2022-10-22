@@ -27,7 +27,7 @@ public:
 		if (tries == MAX_TRIES) {
 			throw;
 		}
-		data = new (std::nothrow) T[(y_size + 1) * (x_size + 1)];
+		data = new (std::nothrow) T[y_size * x_size];
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
 			make_data(tries + 1);
