@@ -17,16 +17,20 @@ private:
 	size_type size;
 	Grid<T, N - 1>* data;
 	bool indexing;
+	const unsigned MAX_TRIES = 1000;
 
 public:
 	using output_type = size_type;
 
 	//метод создание тела сетки
-	void make_data() {
+	void make_data(unsigned tries = 0) {
+		if (tries == MAX_TRIES) {
+			throw;
+		}
 		data = static_cast<Grid<T, N - 1>*>(operator new[](size * sizeof(Grid<T, N - 1>)));
 		if (data == nullptr) {
 			std::cout << "Error in memory alocation!" << std::endl;
-			delete[] data;
+			make_data(tries + 1);
 		}
 		return;
 	}
@@ -39,7 +43,7 @@ public:
 	}
 
 	template<typename... Args>
-	Grid(size_type size, Args ... subgrid): size(size){
+	Grid(size_type size, Args ... subgrid) : size(size) {
 		make_data();
 		for (unsigned i = 0; i < size; i++) {
 			new (data + i) Grid<T, N - 1>(subgrid...);
@@ -64,7 +68,7 @@ public:
 	}
 
 	//конструктор перемещения
-	Grid(Grid<T, N>&& other) noexcept{
+	Grid(Grid<T, N>&& other) noexcept {
 		size = other.get_size();
 		data = other.data;
 		other.data = nullptr;
@@ -79,7 +83,7 @@ public:
 	}
 
 	//перемещающее присваивание
-	Grid<T, N>& operator=(Grid<T, N>&& other) noexcept{
+	Grid<T, N>& operator=(Grid<T, N>&& other) noexcept {
 		Grid<T, N> tmp(other);
 		std::swap(this->size, tmp.size);
 		std::swap(this->data, tmp.data);
@@ -93,7 +97,7 @@ public:
 	}
 
 	//оператор индексирования
-	Grid<T, N-1>& operator[](size_type idx) const{
+	Grid<T, N - 1>& operator[](size_type idx) const {
 		return data[idx];
 	}
 
@@ -142,7 +146,7 @@ public:
 		data[0] = t;
 	}
 
-	Grid(size_type size) : size(size){
+	Grid(size_type size) : size(size) {
 		make_data();
 		for (unsigned i = 0; i < size; i++) {
 			data[i] = default_entity;
@@ -239,7 +243,7 @@ public:
 void check() {
 	Grid<float, 3> const g3(2, 3, 4, 1.0f);
 	assert(1.0f == g3(1, 1, 1));
-	
+
 	Grid<float, 2> g2(2, 5, 2.0f);
 	assert(2.0f == g2(1, 1));
 
