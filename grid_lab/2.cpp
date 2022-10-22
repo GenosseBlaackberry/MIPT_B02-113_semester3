@@ -17,7 +17,7 @@ private:
 	size_type size;
 	Grid<T, N - 1>* data;
 	bool indexing;
-	const unsigned MAX_TRIES = 1000;
+	const unsigned MAX_TRIES = 10;
 
 public:
 	using output_type = size_type;
