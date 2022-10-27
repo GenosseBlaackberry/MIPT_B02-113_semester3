@@ -166,9 +166,6 @@ public:
 
 	//деструктор
 	~Grid() {
-		if (this != nullptr && data!= nullptr) {
-			delete[] data;
-		}
 	}
 
 	//конструктор копирования
