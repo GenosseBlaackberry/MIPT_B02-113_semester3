@@ -52,10 +52,12 @@ public:
 
 	//деструктор
 	~Grid() {
-		for (unsigned i = 0; i < size; i++) {
-			data[i].~Grid();
+		if (data != nullptr) {
+			for (unsigned i = 0; i < size; i++) {
+				data[i].~Grid();
+			}
+			operator delete(data);
 		}
-		operator delete(data);
 	}
 
 	//конструктор копирования
@@ -166,6 +168,9 @@ public:
 
 	//деструктор
 	~Grid() {
+		if (data != nullptr) {
+			delete[] data;
+		}
 	}
 
 	//конструктор копирования
