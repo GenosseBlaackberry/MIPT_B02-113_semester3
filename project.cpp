@@ -6,7 +6,7 @@
 #include <list>
 #include <deque>
 
-unsigned int const SIZE = 128;
+unsigned int const SIZE = 64;
 unsigned int const SQUARE_SIZE = 8;
 double const k = 1;
 double const J = 1;
@@ -14,9 +14,9 @@ double const J = 1;
 
 class Grid {
 private:
-    int spins[SIZE * SIZE];
-    double const H = 1;
-    double const T = 5;
+    std::deque<int> spins;
+    double H = 0;
+    double T = 0;
     int M = 0;
     double E = 0;
 
@@ -26,7 +26,7 @@ public:
 
         for (unsigned i = 0; i < SIZE; i++) {
             for (unsigned j = 0; j < SIZE; j++) {
-                spins[i * SIZE + j] = ((rand() / (double)RAND_MAX >= 0.5) - 1) * 2 + 1;
+                spins.push_back(((rand() / (double)RAND_MAX >= 0.5) - 1) * 2 + 1);
                 M += spins[i * SIZE + j];
             }
         }
@@ -88,12 +88,12 @@ public:
 
             if (dE <= 0 || (rand() / (double)RAND_MAX) < exp(-dE / (k * T)))
             {   
-                /*std::cout << dE << ' ' << exp(-dE / (k * T)) << std::endl;*/
                 spins[y * SIZE + x] = -spins[y * SIZE + x];
                 M += 2 * spins[y * SIZE + x];
                 E += dE;
             }
         }
+        std::cout << "T = " << T << " H = " << H << " M = " << M << std::endl;
     }
 
     std::deque<sf::RectangleShape> drawing_data() {
@@ -102,7 +102,7 @@ public:
         for (unsigned i = 0; i < SIZE; i++) {
             for (unsigned j = 0; j < SIZE; j++) {
                 sf::RectangleShape to_push(sf::Vector2f(SQUARE_SIZE, SQUARE_SIZE));
-                to_push.setPosition(SQUARE_SIZE * j, SQUARE_SIZE * i);
+                to_push.setPosition((float)SQUARE_SIZE * j, (float)SQUARE_SIZE * i);
                 if (spins[i * SIZE + j] == 1) {
                     to_push.setFillColor(sf::Color::Green);
                 }
@@ -116,14 +116,27 @@ public:
                 rectangles.push_back(to_push);
             }
         }
-
         return rectangles;
+    }
+
+    void enter_T() {
+        std::cout << "New T: ";
+        std::cin >> T;
+        std::cout << std::endl;
+    }
+
+    void enter_H() {
+        std::cout << "New H: ";
+        std::cin >> H;
+        std::cout << std::endl;
     }
 };
 
 void graphics() {
     Grid grid = Grid();
-    sf::RenderWindow window(sf::VideoMode(SIZE * SQUARE_SIZE + 400, SIZE * SQUARE_SIZE), "SFML works!");
+    sf::RenderWindow window(sf::VideoMode(SIZE * SQUARE_SIZE, SIZE * SQUARE_SIZE), "Simulation");
+    /*sf::RenderWindow window2(sf::VideoMode(400, 400), "Options");*/
+    window.setVerticalSyncEnabled(true);
 
     grid.metropolis();
     std::deque<sf::RectangleShape> rectangles = grid.drawing_data();
@@ -132,8 +145,17 @@ void graphics() {
         sf::Event event;
         while (window.pollEvent(event))
         {
-            if (event.type == sf::Event::Closed)
+            if (event.type == sf::Event::Closed) {
                 window.close();
+            }
+            if (event.type == sf::Event::KeyPressed) {
+                if (event.key.code == sf::Keyboard::T) {
+                    grid.enter_T();
+                }
+                if (event.key.code == sf::Keyboard::H) {
+                    grid.enter_H();
+                }
+            }
         }
 
         window.clear();
